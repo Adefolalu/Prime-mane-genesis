@@ -50,16 +50,19 @@ function App() {
       const { error } = await supabase.from("waitlist").insert([
         {
           wallet_address: address,
-          joined_at: new Date().toISOString(),
         },
       ]);
 
       if (error) {
+        console.error("Supabase error:", error);
         // Check if it's a duplicate entry error
-        if (error.code === "23505") {
+        if (error.code === "23505" || error.message.includes("duplicate")) {
           setIsOnWaitlist(true);
         } else {
-          throw error;
+          // More detailed error message
+          setError(
+            error.message || "Failed to join waitlist. Please try again."
+          );
         }
       } else {
         setIsOnWaitlist(true);
