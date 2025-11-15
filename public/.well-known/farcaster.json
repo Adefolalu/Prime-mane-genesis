@@ -1,1 +1,30 @@
-{}
+{
+  "frame": {
+    "name": "Genesis",
+    "version": "1",
+    "iconUrl": "https://prime-mane-genesis.vercel.app/icon.png",
+    "homeUrl": "https://prime-mane-genesis.vercel.app",
+    "imageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
+    "buttonTitle": "Join Waitlist",
+    "splashImageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
+    "splashBackgroundColor": "#2596be",
+    "webhookUrl": "https://api.neynar.com/f/app/dd316687-0fbb-4023-ad74-73f04bc24413/event",
+    "subtitle": "Prime mane genesis collection",
+    "description": "Be a part of the Prime mane genesis collection",
+    "primaryCategory": "utility",
+    "tags": ["social", "nft", "art", "base", "warplet"],
+    "heroImageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
+    "tagline": "Secure your spot in the pride",
+    "ogTitle": "Genesis -waitlist",
+    "ogDescription": "Secure your spot in the pride -Join Waitlist",
+    "ogImageUrl": "https://prime-mane-genesis.vercel.app/splash.png"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjIzOTM5NiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDRENEU1MjIzODRkNkYxMDkwYkZENEM0NTI3YTdkNTJERmQyMGJDYTMifQ",
+    "payload": "eyJkb21haW4iOiJwcmltZS1tYW5lLWdlbmVzaXMudmVyY2VsLmFwcCJ9",
+    "signature": "B03tYvSDntQrDy7U4cKRNWqS0886+W0iy1NvzuRJdntxfEcp9VgApgItgzIsDHAIBWICLQP+2dQusH8umgId0xw="
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x02a9093dEB73E9E524657492429377117C70e097"
+  }
+}
