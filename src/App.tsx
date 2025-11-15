@@ -41,17 +41,38 @@ function App() {
   }, [address]);
 
   const handleJoinWaitlist = async () => {
-    if (!address) return;
+    if (!address) {
+      setError("Please connect your wallet first.");
+      return;
+    }
 
     setIsJoining(true);
     setError(null);
 
     try {
-      const { error } = await supabase.from("waitlist").insert([
-        {
-          wallet_address: address,
-        },
-      ]);
+      console.log("Attempting to join waitlist with address:", address);
+
+      // First, check if already on waitlist
+      const { data: existingEntry } = await supabase
+        .from("waitlist")
+        .select("*")
+        .eq("wallet_address", address)
+        .single();
+
+      if (existingEntry) {
+        console.log("Address already on waitlist");
+        setIsOnWaitlist(true);
+        setIsJoining(false);
+        return;
+      }
+
+      // Insert new entry
+      const { data, error } = await supabase
+        .from("waitlist")
+        .insert([{ wallet_address: address }])
+        .select();
+
+      console.log("Insert result:", { data, error });
 
       if (error) {
         console.error("Supabase error:", error);
@@ -60,16 +81,17 @@ function App() {
           setIsOnWaitlist(true);
         } else {
           // More detailed error message
-          setError(
-            error.message || "Failed to join waitlist. Please try again."
-          );
+          setError(`Error: ${error.message}. Check console for details.`);
         }
       } else {
+        console.log("Successfully joined waitlist!");
         setIsOnWaitlist(true);
       }
     } catch (err) {
-      console.error("Error joining waitlist:", err);
-      setError("Failed to join waitlist. Please try again.");
+      console.error("Unexpected error:", err);
+      setError(
+        `Unexpected error: ${err instanceof Error ? err.message : "Unknown error"}`
+      );
     } finally {
       setIsJoining(false);
     }
