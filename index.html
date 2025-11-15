@@ -2,8 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Mini App</title>
+    <meta
+      name="fc:miniapp"
+      content='{ 
+        "version": "next",
+        "imageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
+        "button": {
+          "title": "Join Waitlist",
+          "action": {
+            "type": "launch_miniapp",
+            "url": "https://prime-mane-genesis.vercel.app",
+            "name": "Prime-Mane-Genesis",
+            "splashImageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
+            "splashBackgroundColor": "#2596be"
+          }
+        }
+      }'
+    />
+    <title>Prime Mane Genesis</title>
   </head>
   <body>
     <div id="root"></div>
