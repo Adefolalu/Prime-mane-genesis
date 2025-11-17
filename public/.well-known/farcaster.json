@@ -5,7 +5,7 @@
     "iconUrl": "https://prime-mane-genesis.vercel.app/icon.png",
     "homeUrl": "https://prime-mane-genesis.vercel.app",
     "imageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
-    "buttonTitle": "Join Waitlist",
+    "buttonTitle": "Join Whitelist",
     "splashImageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
     "splashBackgroundColor": "#2596be",
     "webhookUrl": "https://api.neynar.com/f/app/dd316687-0fbb-4023-ad74-73f04bc24413/event",
@@ -15,8 +15,8 @@
     "tags": ["social", "nft", "art", "base", "warplet"],
     "heroImageUrl": "https://prime-mane-genesis.vercel.app/splash.png",
     "tagline": "Secure your spot in the pride",
-    "ogTitle": "Genesis -waitlist",
-    "ogDescription": "Secure your spot in the pride -Join Waitlist",
+    "ogTitle": "Genesis - whitelist",
+    "ogDescription": "Secure your spot in the pride -Join Whitelist",
     "ogImageUrl": "https://prime-mane-genesis.vercel.app/splash.png"
   },
   "accountAssociation": {

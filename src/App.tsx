@@ -6,7 +6,7 @@ import { supabase } from "./supabase";
 function App() {
   const { isConnected, address } = useAccount();
   const { connect, connectors } = useConnect();
-  const [isOnWaitlist, setIsOnWaitlist] = useState(false);
+  const [isOnWhitelist, setIsOnWhitelist] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,26 +21,26 @@ function App() {
     }
   }, [isConnected, connectors, connect]);
 
-  // Check if address is already on waitlist
+  // Check if address is already on whitelist
   useEffect(() => {
-    const checkWaitlistStatus = async () => {
+    const checkWhitelistStatus = async () => {
       if (address) {
         const { data } = await supabase
-          .from("waitlist")
+          .from("whitelist")
           .select("*")
           .eq("wallet_address", address)
           .single();
 
         if (data) {
-          setIsOnWaitlist(true);
+          setIsOnWhitelist(true);
         }
       }
     };
 
-    checkWaitlistStatus();
+    checkWhitelistStatus();
   }, [address]);
 
-  const handleJoinWaitlist = async () => {
+  const handleJoinWhitelist = async () => {
     if (!address) {
       setError("Please connect your wallet first.");
       return;
@@ -50,25 +50,25 @@ function App() {
     setError(null);
 
     try {
-      console.log("Attempting to join waitlist with address:", address);
+      console.log("Attempting to join whitelist with address:", address);
 
-      // First, check if already on waitlist
+      // First, check if already on whitelist
       const { data: existingEntry } = await supabase
-        .from("waitlist")
+        .from("whitelist")
         .select("*")
         .eq("wallet_address", address)
         .single();
 
       if (existingEntry) {
-        console.log("Address already on waitlist");
-        setIsOnWaitlist(true);
+        console.log("Address already on whitelist");
+        setIsOnWhitelist(true);
         setIsJoining(false);
         return;
       }
 
       // Insert new entry
       const { data, error } = await supabase
-        .from("waitlist")
+        .from("whitelist")
         .insert([{ wallet_address: address }])
         .select();
 
@@ -78,14 +78,14 @@ function App() {
         console.error("Supabase error:", error);
         // Check if it's a duplicate entry error
         if (error.code === "23505" || error.message.includes("duplicate")) {
-          setIsOnWaitlist(true);
+          setIsOnWhitelist(true);
         } else {
           // More detailed error message
           setError(`Error: ${error.message}. Check console for details.`);
         }
       } else {
-        console.log("Successfully joined waitlist!");
-        setIsOnWaitlist(true);
+        console.log("Successfully joined whitelist!");
+        setIsOnWhitelist(true);
       }
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -97,12 +97,29 @@ function App() {
     }
   };
 
-  const handleShare = () => {
-    const shareText =
-      "I just joined the Prime Mane Genesis waitlist! First Solana collection on Farcaster 🦁";
-    sdk.actions.openUrl(
-      `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}`
-    );
+  const handleShare = async () => {
+    const text =
+      "I just joined the Prime Mane Genesis whitelist! First Solana collection on Farcaster 🦁";
+
+    const imageUrl =
+      "https://aquamarine-wilful-anglerfish-677.mypinata.cloud/ipfs/bafybeiacoqtk3ojuwjlya6h7j3juwl7ggstrhyhzvyltmbjsr6qtm6aviy";
+    const miniappUrl = "https://prime-mane-genesis.vercel.app";
+
+    // SDK expects embeds as [] | [string] | [string, string]
+    // Provide [imageUrl, miniappUrl] to attach image + link
+    const embeds: [string, string] = [imageUrl, miniappUrl];
+
+    try {
+      await sdk.actions.composeCast({ text, embeds });
+      console.log("composeCast sent");
+    } catch (err) {
+      console.error("composeCast error:", err);
+      // Fallback to opening the web composer if composeCast fails
+      const fallbackUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(
+        text
+      )}`;
+      sdk.actions.openUrl(fallbackUrl);
+    }
   };
 
   if (!isConnected) {
@@ -234,11 +251,11 @@ function App() {
           </p>
         </div>
 
-        {!isOnWaitlist ? (
+        {!isOnWhitelist ? (
           <>
             <button
               type="button"
-              onClick={handleJoinWaitlist}
+              onClick={handleJoinWhitelist}
               disabled={isJoining}
               style={{
                 width: "100%",
@@ -273,7 +290,7 @@ function App() {
                 }
               }}
             >
-              {isJoining ? "Joining..." : "Join Waitlist"}
+              {isJoining ? "Joining..." : "Join Whitelist"}
             </button>
             {error && (
               <p
@@ -302,7 +319,7 @@ function App() {
               }}
             >
               <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>
-                ✓ You're on the waitlist!
+                ✓ You're on the whitelist!
               </p>
             </div>
 
