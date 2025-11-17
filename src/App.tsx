@@ -99,7 +99,7 @@ function App() {
 
   const handleShare = async () => {
     const text =
-      "I just joined the Prime Mane Genesis whitelist! First Solana collection on Farcaster 🦁";
+      "I just joined the Prime Mane Genesis whitelist! First Base collection on Farcaster 🦁";
 
     const imageUrl =
       "https://aquamarine-wilful-anglerfish-677.mypinata.cloud/ipfs/bafybeiacoqtk3ojuwjlya6h7j3juwl7ggstrhyhzvyltmbjsr6qtm6aviy";
@@ -214,7 +214,7 @@ function App() {
             marginBottom: "30px",
           }}
         >
-          First Solana NFT Collection on Farcaster
+          First Base NFT Collection on Farcaster
         </p>
 
         <div
